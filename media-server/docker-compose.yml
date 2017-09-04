@@ -1,0 +1,28 @@
+version: '3.3'
+
+services:
+  transmission:
+    image: linuxserver/transmission
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    volumes:
+      - ~/media-data/tn-config/:/config/
+      - ~/media-data/downloads/:/downloads/
+  
+  sonarr:
+    image: linuxserver/sonarr
+    ports:
+      - 8989:8989
+    volumes:
+      - ~/media-data/sr-config/:/config/
+      - ~/media-data/downloads/:/downloads/
+      - ~/media-data/tv:/tv/
+  
+  plex:
+    image: linuxserver/plex
+    network_mode: host
+    volumes:
+      - ~/media-data/tv/:/data/tvshows/
+      - ~/media-data/px-config/:/config
